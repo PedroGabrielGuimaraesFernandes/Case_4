@@ -1,0 +1,205 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% csrf_token %}
+<div class="container" style="max-width: 400px; margin: 0 auto; text-align: center;">
+    <h1>Cadastro de Projeto</h1>
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" class="form-control campo-personalizado" type="text">
+    </div>
+    <div class="form-group">
+        <label for="preco">Preço</label>
+        <input id="preco" name="preco" class="form-control campo-personalizado" type="text">
+    </div>
+    <div class="form-group">
+        <label for="dias">Dias Uteis</label>
+        <input id="dias" name="dias" class="form-control campo-personalizado" type="text">
+    </div>
+
+    <div id="coordenadores-container">
+        <label>Coordenadores</label>
+        <div class="coordenador-input">
+            <select id="coordenador" class="form-control campo-personalizado" name="coordenador">
+                <option value="">--Selecione um Coordenador--</option>
+                {% for membro in coordenadores %}
+                    <option value="{{membro.id_membro}}">{{membro.nome}}</option>
+                {% endfor %}
+            </select>
+            <button type="button" class="btn-remove">Remover</button>
+        </div>
+    </div>
+    <button type="button" id="btn-add-coordenador">Adicionar Coordenador</button>
+    <div id="projetistas-container">
+        <label>Projetistas</label>
+        <div class="projetista-input">
+            <select id="projtista" class="form-control campo-personalizado" name="projetista">
+                <option value="">--Selecione um Projetista--</option>
+                    {% for membro in projetistas %}
+                        <option value="{{membro.id_membro}}">{{membro.nome}}</option>
+                    {% endfor %}
+            </select>
+            <button type="button" class="btn-remove">Remover</button>
+        </div>
+        <div style="position: fixed; bottom: 20px; right: 20px; width: 150px; height: auto; z-index: 1000;">
+            <img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" alt="Logo" style="width: 100%; height: auto;">
+        </div>
+        
+    </div>
+
+    <button type="button" id="btn-add-projetista">Adicionar Projetista</button>
+
+    <h2 id="teste"></h2>
+    <button type="button" onClick="chamaAjaxProjeto()" class="form-control-sm btn-cadastrar">Cadastrar</button>
+</div>
+
+<style>
+    .campo-personalizado {
+        width: 100%;
+        max-width: 300px;
+        border: 2px solid #AD183D;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .btn-cadastrar,
+    #btn-add-coordenador,
+    #btn-add-projetista {
+        background-color: #003366;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 300px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .btn-cadastrar:hover,
+    #btn-add-coordenador:hover,
+    #btn-add-projetista:hover {
+        background-color: #005599;
+    }
+
+    .btn-remove {
+        margin-left: 10px;
+        background-color: #FF0000;
+        color: white;
+        border: none;
+        padding: 2px 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin: 5px;
+    }
+    
+
+    .btn-remove:hover {
+        background-color: #FF3333;
+    }
+
+    /* Espaçamento adicional entre os botões de adicionar projetista e cadastrar */
+    #btn-add-projetista {
+        margin-bottom: 20px;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        $('#btn-add-coordenador').click(function() {
+            $('#coordenadores-container').append(`
+                <div class="coordenador-input">
+                    <select id="coordenador" class="form-control campo-personalizado" name="coordenador">
+                        <option value="">--Selecione um Coordenador--</option>
+                        {% for membro in coordenadores %}
+                            <option value="{{membro.id_membro}}">{{membro.nome}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn-remove">Remover</button>
+                </div>
+            `);
+        });
+
+        $('#btn-add-projetista').click(function() {
+            $('#projetistas-container').append(`
+                <div class="projetista-input">
+                    <select id="projtista" class="form-control campo-personalizado"  name="projetista">
+                        <option value="">--Selecione um Projetista--</option>
+                        {% for membro in projetistas %}
+                            <option value="{{membro.id_membro}}">{{membro.nome}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn-remove">Remover</button>
+                </div>
+            `);
+        });
+
+        // Remove a entrada quando o botão de remover é clicado
+        $(document).on('click', '.btn-remove', function() {
+            $(this).parent('.coordenador-input, .projetista-input').remove();
+        });
+    });
+
+    // Função Ajax que chama a função quando o botão é criado
+    function chamaAjaxProjeto() {
+        const nome = document.getElementById("nome").value;
+        const preco = document.getElementById("preco").value;
+        const dias = document.getElementById("dias").value;
+
+        console.log(nome)
+        console.log(preco)
+        console.log(dias)
+        // Coletando coordenadores
+        const coordenadores = [];
+        $('select[name="coordenador"]').each(function() {
+            coordenadores.push($(this).val());
+        });
+        console.log(coordenadores)
+        
+        // Coletando projetistas
+        const projetistas = [];
+        $('select[name="projetista"]').each(function() {
+            projetistas.push($(this).val());
+        });
+        console.log(projetistas)
+        
+        const requestData = {
+            nome: nome,
+            preco: preco,
+            dias: dias,
+            coordenadores: JSON.stringify(coordenadores),
+            projetistas: JSON.stringify(projetistas),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cadastrar_projeto" %}',
+            data: requestData,
+            success: function(response) {
+                console.log(response);
+                if (response.status === 'success') {
+                    const teste = document.getElementById("teste");
+                    teste.innerText = "Cadastrado com sucesso";
+                    document.getElementById("nome").value = "";
+                    document.getElementById("preco").value = "";
+                    document.getElementById("dias").value = "";
+                    $('select[name="coordenador"]').val(""); // Limpa coordenadores
+                    $('select[name="projetista"]').val(""); // Limpa projetistas
+                    alert("Projeto cadastrado com sucesso");
+                } else {
+                    $('#message').html('<p>Erro ao cadastrar. Verifique os dados e tente novamente.</p>');
+                }
+            },
+            error: function(xhr, errmsg, err) {
+                $('#message').html('<p>Ocorreu um erro. Tente novamente mais tarde.</p>');
+            }
+        });
+    }
+</script>
+{% endblock conteudo %}

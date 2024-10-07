@@ -1,0 +1,88 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% csrf_token %}
+<div class="container" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h1>Cadastrar Metas</h1>
+        <!-- Coloque os campos de cadastro de metas aqui -->
+        <div class="form-group">
+            <label for="meta">Meta:</label>
+            <input type="text" class="form-control" id="meta" name="meta" style="border: 2px solid #AD183D;"> <!-- Bordas do campo de entrada -->
+        </div>
+        <button type="button" onClick="chamaAjaxMetas()" class="form-control-sm btn-cadastrar">Cadastrar</button><!-- Botão na cor azul marinho -->
+        <h2 id="teste"> </h2>
+</div>
+<img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" 
+     alt="Logo EJEM" 
+     class="logo-ejem">
+     
+     
+<style>
+    .campo-personalizado {
+      width: 100%; /* Define a largura total do campo dentro do container */
+      max-width: 300px; /* Limita a largura máxima para que os campos fiquem menores */
+      border: 2px solid #AD183D; /* Borda na cor AD183D */
+      margin: 0 auto; /* Centraliza os campos */
+    }
+
+    .form-group {
+      margin-bottom: 20px; /* Aumenta o espaçamento entre os campos */
+    }
+
+    .btn-cadastrar {
+      background-color: #003366; /* Cor do fundo */
+      color: white; /* Cor do texto */
+      border: none; /* Remove a borda padrão */
+      padding: 10px; /* Adiciona um pouco de espaço interno */
+      cursor: pointer; /* Altera o cursor para indicar que é clicável */
+      font-size: 16px; /* Tamanho da fonte */
+    }
+
+    .btn-cadastrar:hover {
+      background-color: #005599; /* Cor ao passar o mouse (opcional) */
+    }
+
+    /* Estilo da imagem */
+    .logo-ejem {
+        position: fixed; /* Permite que a imagem fique fixa na tela */
+        bottom: 20px; /* Distância do fundo da tela */
+        right: 20px; /* Distância da direita da tela */
+        width: 150px; /* Ajuste o tamanho conforme necessário */
+        height: auto; /* Mantém a proporção da imagem */
+        z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+    }
+</style>
+
+<script>
+    function chamaAjaxMetas(){
+        const meta = document.getElementById("meta").value
+        
+        const requestData = {
+            meta: meta,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        }
+        
+        console.log(requestData)
+
+        $.ajax({
+          type: 'POST',
+          url: '{% url "cadastrar_meta" %}',
+          data: requestData,
+          success: function(response) {
+              console.log(response)
+              if (response.status === 'success') {
+                  const teste = document.getElementById("teste")
+                  teste.innerText = "Cadastrado com Sucesso"
+                  document.getElementById("meta").value = ""
+                  alert("Meta Cadastrada com Sucesso")
+              } else {
+                  $('#message').html('<p>Erro ao cadastrar. Verifique os dados e tente novamente.</p>');
+              }
+          },
+          error: function(xhr, errmsg, err) {
+              $('#message').html('<p>Ocorreu um erro. Tente novamente mais tarde.</p>');
+          }
+      });
+    }
+</script>
+{% endblock conteudo %}

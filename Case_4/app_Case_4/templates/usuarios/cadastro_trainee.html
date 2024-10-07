@@ -1,0 +1,120 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% csrf_token %}
+<div class="container" style="max-width: 400px; margin: 0 auto; text-align: center;">
+    <h1>Cadastro Trainees</h1>
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" class="form-control campo-personalizado" type="text">
+    </div>
+    <div class="form-group">
+        <label for="idade">Idade</label>
+        <input id="idade" name="idade" class="form-control campo-personalizado" type="text">
+    </div>
+    <div class="form-group">
+        <label for="curso">Curso</label>
+        <input id="curso" name="curso" class="form-control campo-personalizado" type="text">
+    </div>
+    <div class="form-group">
+        <label for="semestre">Semestre</label>
+        <select id="semestre" name="semestre" class="form-control campo-personalizado" type="text">
+            <option value="">--Selecione o semestre--</option>
+            <option value="1°">1°</option>
+            <option value="2°">2°</option>
+            <option value="3°">3°</option>
+            <option value="4°">4°</option>
+            <option value="5°">5°</option>
+            <option value="6°">6°</option>
+            <option value="7°">7°</option>
+            <option value="8°">8°</option>
+            <option value="9°">9°</option>
+            <option value="10°">10°</option>
+        </select>
+    </div>
+
+    <button type="button" onClick="chamaAjaxTrainee()" class="form-control-sm btn-cadastrar">Cadastrar</button>
+    <h2 id="teste"> </h2>
+</div>
+
+<!-- Adicionando a imagem -->
+<img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" 
+     alt="Logo EJEM" 
+     class="logo-ejem">
+
+<style>
+    .campo-personalizado {
+      width: 100%; /* Define a largura total do campo dentro do container */
+      max-width: 300px; /* Limita a largura máxima para que os campos fiquem menores */
+      border: 2px solid #AD183D; /* Borda na cor AD183D */
+      margin: 0 auto; /* Centraliza os campos */
+    }
+
+    .form-group {
+      margin-bottom: 20px; /* Aumenta o espaçamento entre os campos */
+    }
+
+    .btn-cadastrar {
+      background-color: #003366; /* Cor do fundo */
+      color: white; /* Cor do texto */
+      border: none; /* Remove a borda padrão */
+      padding: 10px; /* Adiciona um pouco de espaço interno */
+      cursor: pointer; /* Altera o cursor para indicar que é clicável */
+      font-size: 16px; /* Tamanho da fonte */
+    }
+
+    .btn-cadastrar:hover {
+      background-color: #005599; /* Cor ao passar o mouse (opcional) */
+    }
+
+    /* Estilo da imagem */
+    .logo-ejem {
+        position: fixed; /* Permite que a imagem fique fixa na tela */
+        bottom: 20px; /* Distância do fundo da tela */
+        right: 20px; /* Distância da direita da tela */
+        width: 150px; /* Ajuste o tamanho conforme necessário */
+        height: auto; /* Mantém a proporção da imagem */
+        z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+    }
+</style>
+
+<script>
+    function chamaAjaxTrainee(){
+        const nome = document.getElementById("nome").value
+        const idade = document.getElementById("idade").value
+        const curso = document.getElementById("curso").value
+        const semestre = document.getElementById("semestre").value
+
+        const requestData = {
+          nome: nome,
+          idade: idade,
+          curso: curso,
+          semestre: semestre,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        }
+      
+        $.ajax({
+          type: 'POST',
+          url: '{% url "cadastrar_trainee" %}',
+          data: requestData,
+          success: function(response) {
+              console.log(response)
+              if (response.status === 'success') {
+                  const teste = document.getElementById("teste")
+                  teste.innerText = "Cadastro Concluido"
+                  document.getElementById("nome").value = ""
+                  document.getElementById("idade").value = ""
+                  document.getElementById("curso").value = ""
+                  document.getElementById("semestre").value = ""
+                  alert("Trainee Cadastrado com Sucesso")
+              } else {
+                  $('#message').html('<p>Erro ao cadastrar. Verifique os dados e tente novamente.</p>');
+              }
+          },
+          error: function(xhr, errmsg, err) {
+              $('#message').html('<p>Ocorreu um erro. Tente novamente mais tarde.</p>');
+          }
+      });
+    }
+</script>
+{% endblock conteudo %}

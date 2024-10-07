@@ -1,0 +1,49 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<div class="container" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h1>Informações Gerais</h1>
+    <div class="list-group">
+        <a href="{% url 'cadastro_metas' %}" class="list-group-item list-group-item-action btn btn-primary">Cadastrar Metas</a>
+        <a href="{% url 'cadastro_membro' %}" class="list-group-item list-group-item-action btn btn-primary">Cadastrar Membros</a>
+        <a href="{% url 'home' %}" class="list-group-item list-group-item-action btn btn-secondary">Voltar ao Menu Principal</a>
+    </div>
+</div>
+
+<img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" alt="Logotipo EJE Mackenzie" class="imagem-canto-inferior">
+
+<style>
+    .list-group-item {
+        margin: 10px 0; /* Espaço entre os botões */
+        padding: 25px; /* Diminui o tamanho dos botões */
+        font-size: 16px; /* Reduz o tamanho da fonte */
+        background-color: #AD183D; /* Cor dos botões */
+        color: white; /* Cor do texto dos botões */
+        border: none; /* Remove a borda padrão */
+        transition: transform 0.2s;
+    }
+
+    .list-group-item:hover {
+        background-color: #003366; /* Cor dos botões ao passar o mouse por cima */
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .list-group-item.btn-secondary {
+        background-color: #003366; /* Cor do botão Voltar */
+        color: white;
+    }
+
+    .list-group-item.btn-secondary:hover {
+        color: #AD183D; /* Cor do texto ao passar o mouse por cima do botão "Voltar" */
+    }
+
+    .imagem-canto-inferior {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 150px;
+        height: auto;
+        z-index: 1000;
+    }
+</style>
+{% endblock conteudo %}

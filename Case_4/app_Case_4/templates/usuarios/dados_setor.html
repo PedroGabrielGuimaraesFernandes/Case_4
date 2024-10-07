@@ -1,0 +1,33 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<div class="container" style="max-width: 600px; margin: 0 auto; text-align: center; margin-top: 50px;">
+    <h1>Dados do Setor</h1>
+    <ul style="list-style-type: none; padding: 0;">
+        <li><strong>Faturamento Total:</strong> {{ faturamento_total }}</li>
+        <li><strong>Quantidade de Projetos:</strong> {{ quantidade_projetos }}</li>
+        <li><strong>Quantidade de Trainees:</strong> {{ quantidade_trainees }}</li>
+        <li><strong>Quantidade Total de Membros:</strong> {{ quantidade_membros }}</li>
+        <li><strong>Quantidade de Projetos por Membro:</strong> {{ quantidade_projetos_por_membro }}</li>
+    </ul>
+    
+    <a href="{% url 'home' %}" class="btn" style="background-color: #003366; color: white;">Voltar ao Menu Principal</a>
+
+</div>
+
+<img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" 
+     alt="Logo EJEM" 
+     class="logo-ejem">
+     
+     <style>
+        
+        /* Estilo da imagem */
+        .logo-ejem {
+            position: fixed; /* Permite que a imagem fique fixa na tela */
+            bottom: 20px; /* Distância do fundo da tela */
+            right: 20px; /* Distância da direita da tela */
+            width: 150px; /* Ajuste o tamanho conforme necessário */
+            height: auto; /* Mantém a proporção da imagem */
+            z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+        }
+    </style>
+{% endblock conteudo %}

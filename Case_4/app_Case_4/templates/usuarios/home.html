@@ -1,0 +1,61 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  {% csrf_token %}
+  <div class="container" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h1>Menu Principal</h1>
+    <div class="list-group">
+        <a href="{% url 'cadastro_projeto' %}" class="list-group-item list-group-item-action btn btn-primary">Cadastrar Projeto</a>
+        <a href="{% url 'cadastro_trainee' %}" class="list-group-item list-group-item-action btn btn-primary">Cadastrar Trainees</a>
+        <a href="{% url 'dados_setor' %}" class="list-group-item list-group-item-action btn btn-primary">Mostrar Dados do Setor</a>
+        <a href="{% url 'informacoes_gerais' %}" class="list-group-item list-group-item-action btn btn-primary">Informações Gerais</a>
+        <a href="{% url 'sair_do_sistema' %}" class="list-group-item list-group-item-action btn btn-danger">Sair do Sistema</a>
+
+
+    </div>
+  </div>
+
+  <img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" alt="Logotipo EJE Mackenzie" class="imagem-canto-inferior">
+
+  <style>
+    .list-group-item {
+      margin: 10px 0; /* Espaço entre os botões */
+      padding: 25px; /* Diminui o tamanho dos botões */
+      font-size: 16px; /* Reduz o tamanho da fonte */
+      background-color: #AD183D; /* Cor dos botões */
+      color: white; /* Cor do texto dos botões */
+      border: none; /* Remove a borda padrão */
+      transition: transform 0.2s; /* Adiciona uma transição suave para o efeito de aumento */
+
+    }
+  
+    .list-group-item:hover {
+      background-color: #003366; /* Cor dos botões ao passar o mouse por cima (opcional) */
+      color: white;
+      transform: scale(1.05); /* Aumenta o tamanho do botão ao passar o mouse */
+
+    }
+  
+    .list-group-item.btn-danger {
+      background-color: #003366; /* Cor do botão de sair */
+      color: white;
+    }
+
+    .list-group-item.btn-danger:hover {
+      color: #AD183D; /* Cor do texto ao passar o mouse por cima do botão "Sair do Sistema" */
+    }
+
+    .imagem-canto-inferior {
+        position: fixed; /* Permite que a imagem fique fixa na tela */
+        bottom: 20px; /* Distância do fundo da tela */
+        right: 20px; /* Distância da direita da tela */
+        width: 150px; /* Ajuste o tamanho conforme necessário */
+        height: auto; /* Mantém a proporção da imagem */
+        z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+    }
+  </style>
+
+<script>
+  // Aqui você pode colocar outros scripts JS caso necessário
+</script>
+{% endblock conteudo %}

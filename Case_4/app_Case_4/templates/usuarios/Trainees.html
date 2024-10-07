@@ -1,0 +1,44 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<h1 class= "text-center">Trainees Cadastrados</h1>
+  <body>
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>idade</th>
+                <th>curso</th>
+                <th>semestre</th>
+            </tr>
+            {% for trainee in trainees%}
+            <tr>
+                <td>{{trainee.id_trainee}}</td>
+                <td>{{trainee.nome}}</td>
+                <td>{{trainee.idade}}</td>
+                <td>{{trainee.curso}}</td>
+                <td>{{trainee.semestre}}</td>
+            </tr>
+            {% endfor%}
+        </table>
+    </div>
+
+     
+     <img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" 
+     alt="Logo EJEM" 
+     class="logo-ejem">
+     
+     <style>
+        
+        /* Estilo da imagem */
+        .logo-ejem {
+            position: fixed; /* Permite que a imagem fique fixa na tela */
+            bottom: 20px; /* Distância do fundo da tela */
+            right: 20px; /* Distância da direita da tela */
+            width: 150px; /* Ajuste o tamanho conforme necessário */
+            height: auto; /* Mantém a proporção da imagem */
+            z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+        }
+    </style>
+      </style>
+{% endblock%}

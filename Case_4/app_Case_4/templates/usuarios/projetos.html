@@ -1,0 +1,44 @@
+{% extends "usuarios/base.html" %}
+{% block conteudo %}
+<h1 class= "text-center">Projetos Cadastrados</h1>
+  <body>
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>preço</th>
+                <th>Dias Uteis</th>
+                <th>Coordenadores</th>
+                <th>Projetistas</th>
+            </tr>
+            {% for projeto in projetos%}
+            <tr>
+                <td>{{projeto.id_projeto}}</td>
+                <td>{{projeto.nome}}</td>
+                <td>{{projeto.preco}}</td>
+                <td>{{projeto.dias}}</td>
+                <td>{{projeto.coordenadores}}</td>
+                <td>{{projeto.projetistas}}</td>
+            </tr>
+            {% endfor%}
+        </table>
+    </div>
+
+    <img src="https://www.ejemackenzie.com.br/wp-content/uploads/2022/10/cropped-logovermelho.png" 
+     alt="Logo EJEM" 
+     class="logo-ejem">
+     
+     <style>
+        
+        /* Estilo da imagem */
+        .logo-ejem {
+            position: fixed; /* Permite que a imagem fique fixa na tela */
+            bottom: 20px; /* Distância do fundo da tela */
+            right: 20px; /* Distância da direita da tela */
+            width: 150px; /* Ajuste o tamanho conforme necessário */
+            height: auto; /* Mantém a proporção da imagem */
+            z-index: 1000; /* Garante que a imagem fique acima de outros elementos */
+        }
+    </style>
+{% endblock%}
